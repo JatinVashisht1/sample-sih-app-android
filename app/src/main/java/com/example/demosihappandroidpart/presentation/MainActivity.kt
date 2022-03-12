@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Box {
+                    Row {
                         GetData()
                     }
                 }
@@ -39,5 +40,9 @@ class MainActivity : ComponentActivity() {
 fun GetData(viewModel: MainViewModel = hiltViewModel()) {
     Button(onClick = viewModel::getAllWorkers) {
         Text(text = "on click")
+    }
+
+    Button(onClick = {viewModel.postData()}) {
+        Text(text = "post data")
     }
 }
