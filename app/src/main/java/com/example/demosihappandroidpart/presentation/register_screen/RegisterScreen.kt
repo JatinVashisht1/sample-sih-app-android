@@ -1,4 +1,4 @@
-package com.example.demosihappandroidpart.presentation.home_screen
+package com.example.demosihappandroidpart.presentation.register_screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,17 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.demosihappandroidpart.presentation.AddProfileViewModel
-import com.example.demosihappandroidpart.presentation.UiEvent
-import com.example.demosihappandroidpart.presentation.home_screen.components.CustomTextField
+import com.example.demosihappandroidpart.presentation.register_screen.components.CustomTextField
 import com.example.demosihappandroidpart.presentation.text_field_state.TextFieldState
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 
 @Composable
-fun HomeScreen(
+fun RegisterScreen(
     modifier: Modifier = Modifier,
-    viewModel: AddProfileViewModel = hiltViewModel()
+    viewModel: RegisterScreenViewModel = hiltViewModel()
 ) {
     val firstNameState by viewModel.firstNameTextField.observeAsState(TextFieldState())
     val lastNameState by viewModel.lastNameTextField.observeAsState(TextFieldState())

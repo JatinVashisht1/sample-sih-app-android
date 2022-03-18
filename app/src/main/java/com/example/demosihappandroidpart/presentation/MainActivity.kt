@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
-import com.example.demosihappandroidpart.presentation.home_screen.HomeScreen
+import com.example.demosihappandroidpart.presentation.register_screen.RegisterScreen
 import com.example.demosihappandroidpart.presentation.ui.theme.DemoSIHAppAndroidPartTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    HomeScreen(modifier = Modifier.fillMaxSize())
+                    RegisterScreen(modifier = Modifier.fillMaxSize())
                 }
             }
         }

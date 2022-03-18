@@ -1,4 +1,4 @@
-package com.example.demosihappandroidpart.presentation
+package com.example.demosihappandroidpart.presentation.register_screen
 
 import android.app.Application
 import android.graphics.BitmapFactory
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddProfileViewModel @Inject constructor(
+class RegisterScreenViewModel @Inject constructor(
     private val getAllWorkersUseCase: UseCaseGetAllWorkers,
     private val repo: SihRepo,
     private val myApplication: Application
