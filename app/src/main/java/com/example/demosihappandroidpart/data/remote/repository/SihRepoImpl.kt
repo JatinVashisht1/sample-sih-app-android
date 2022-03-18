@@ -22,7 +22,16 @@ class SihRepoImpl @Inject constructor (private val api: SihApi) : SihRepo{
         return data
     }
 
-    override suspend fun postImage(inputStream: Bitmap) {
+    override suspend fun postImage(
+        inputStream: Bitmap,
+        village: String,
+        street: String,
+        houseNumber: String,
+        mid: String,
+        age: String,
+        lastName: String,
+        firstName: String
+    ) {
         CoroutineScope(IO).launch {
             val bos = ByteArrayOutputStream()
             inputStream.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
@@ -34,19 +43,22 @@ class SihRepoImpl @Inject constructor (private val api: SihApi) : SihRepo{
                 request
             )
 
+            val address = "{\"houseNumber\": \"${houseNumber}\", \"street\": \"${street}\", \"village\": \"${village}\"}"
+
             try {
-                if (filePart != null) {
-                    val a = api.postData(image = filePart)
-                    Log.d("responsephoto", a.toString())
-                }
+                val a = api.postData(
+                    image = filePart,
+                    firstName = MultipartBody.Part.createFormData("firstName", firstName.toString()),
+                    lastName = MultipartBody.Part.createFormData("lastName", lastName.toString()),
+                    mid = MultipartBody.Part.createFormData("mid", mid.toString()),
+                    address = MultipartBody.Part.createFormData("address", address.toString())
+                )
+                Log.d(Constants.SIH_REPO_TAG, a.toString())
             }
             catch (e: Exception) {
-//                Snackbar.make(viewBinding.root, "Something went wrong", Snackbar.LENGTH_SHORT).show()
-//                return@launch
+                Log.d(Constants.SIH_REPO_TAG, e.toString())
             }
             Log.d("MyActivity", "on finish upload file")
-//            val result = api.postData(image = filePart)
-//            Log.d("responsephoto", "Response is ${result.toString()}")
         }
     }
 }
