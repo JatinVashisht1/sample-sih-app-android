@@ -4,4 +4,8 @@ data class ModelAddress(
     val houseNumber: Int = 0,
     val street: String = "",
     val village: String = ""
-)
+){
+    override fun toString(): String {
+        return "House Number: ${houseNumber}, Street: ${street}, village: $village"
+    }
+}
