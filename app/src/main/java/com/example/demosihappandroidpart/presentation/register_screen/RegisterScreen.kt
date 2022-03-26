@@ -1,5 +1,6 @@
 package com.example.demosihappandroidpart.presentation.register_screen
 
+import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,7 +27,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
-    viewModel: RegisterScreenViewModel = hiltViewModel()
+    viewModel: RegisterScreenViewModel = hiltViewModel(),
+    getContent: ActivityResultLauncher<String>
 ) {
     val firstNameState by viewModel.firstNameTextField.observeAsState(TextFieldState())
     val lastNameState by viewModel.lastNameTextField.observeAsState(TextFieldState())
@@ -36,7 +39,11 @@ fun RegisterScreen(
     val villageState by viewModel.villageTextField.observeAsState(TextFieldState())
 
     val scaffoldState = rememberScaffoldState()
-    Scaffold(scaffoldState = scaffoldState) {
+    Scaffold(
+        scaffoldState = scaffoldState,
+    ) {
+        val context = LocalContext.current
+
         Column(modifier = modifier) {
             Row(
                 modifier = Modifier
@@ -115,6 +122,13 @@ fun RegisterScreen(
                 placeholder = "Village cannot be empty",
                 onValueChange = viewModel::onVillageTextFieldChange,
             )
+
+            Button(onClick = {getContent.launch("image/*")}, modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)) {
+                Text(text = "Add Image")
+            }
+
             Button(
                 onClick = viewModel::onRegisterButtonClicked,
                 modifier = Modifier
@@ -123,12 +137,13 @@ fun RegisterScreen(
             ) {
                 Text(text = "Register")
             }
+
         }
     }
 
-    LaunchedEffect(key1 = Unit){
-        viewModel.event.receiveAsFlow().collect { event->
-            when(event){
+    LaunchedEffect(key1 = Unit) {
+        viewModel.event.receiveAsFlow().collect { event ->
+            when (event) {
                 is UiEvent.ShowSnackbar -> scaffoldState.snackbarHostState.showSnackbar(message = event.message)
             }
         }
